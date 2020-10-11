@@ -12,6 +12,7 @@ export abstract class Item implements Comparable<Item> {
         this.id = id = id++;
         this.name = name;
         this.value = value;
+        this.weight = weight;
     }
 
     public compareTo(other: Item): number {
@@ -30,7 +31,10 @@ export abstract class Item implements Comparable<Item> {
         }
     }
 
-    toString(): string {
+    public toString(): string {
         return `${this.name} - Value: ${this.value}, Weight: ${this.weight}`;
     }
+
+    public use(): void {}
+
 }
