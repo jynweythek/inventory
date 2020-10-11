@@ -32,7 +32,7 @@ export abstract class Item implements Comparable<Item> {
     }
 
     public toString(): string {
-        return `${this.name} - Value: ${this.value}, Weight: ${this.weight}`;
+        return `${this.name} - Value: ${this.value}, Weight: ${this.weight.toFixed(2)}`;
     }
 
     public use(): void {}
