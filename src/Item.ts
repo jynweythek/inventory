@@ -8,8 +8,8 @@ export abstract class Item implements Comparable<Item> {
     weight: number;
     name: string;
 
-    constructor(name, value, weight) {
-        this.id = id = id++;
+    constructor(name: string, value: number, weight: number) {
+        this.id = id++;
         this.name = name;
         this.value = value;
         this.weight = weight;
@@ -36,5 +36,4 @@ export abstract class Item implements Comparable<Item> {
     }
 
     public use(): void {}
-
 }

@@ -2,11 +2,12 @@ import { Weapon } from './Weapon';
 
 export default class Bow extends Weapon {
     public name: string;
-    private durabilityModifier: number;
+    protected durabilityModifier: number;
 
-    constructor(name, damage, durability, value, weight) {
+    constructor(name: string, damage: number, durability: number, value: number, weight: number) {
         super(name, damage, durability, value, weight);
         this.name = name;
+        // this.durabilityModifier =
     }
 
     polish() {
