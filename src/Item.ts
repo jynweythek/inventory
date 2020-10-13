@@ -8,6 +8,14 @@ export abstract class Item implements Comparable<Item> {
     weight: number;
     name: string;
 
+    static numberOfItems() {
+        return id;
+    }
+
+    static reset() {
+        return id = 0;
+    }
+
     constructor(name: string, value: number, weight: number) {
         this.id = id++;
         this.name = name;

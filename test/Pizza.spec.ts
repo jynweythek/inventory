@@ -15,8 +15,8 @@ describe('Pizza', () => {
 
         it('should return default message', () => {
             const expected = 'There is nothing left of the pizza to consume.';
-            sut.use();
-            expect(sut.use()).toBe(expected);
+            sut.eat();
+            expect(sut.eat()).toBe(expected);
         });
     });
 
