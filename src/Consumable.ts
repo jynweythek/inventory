@@ -15,6 +15,7 @@ export default class Consumable {
             return this.eat(this.args);
         // }
     }
+
     eat(args: any) {
         const DFLT_MESSAGE: string = `You eat the ${this.name}.`;
         const SICK_MESSAGE: string = 'You feel sick.';

@@ -2,13 +2,13 @@ import Consumable from './Consumable';
 
 export default class Pizza extends Consumable {
     private readonly instanceName = 'pizza';
-    numberOfSlices: number;
-    slicesEaten: number = 0;
-    isBad: boolean;
-    consumed: boolean;
-    name: string | undefined;
-    spoiled: boolean | undefined;
-    args: any;
+    private numberOfSlices: number;
+    private slicesEaten: number = 0;
+    private isBad: boolean;
+    public consumed: boolean;
+    public name: string | undefined;
+    public spoiled: boolean | undefined;
+    public args: any;
 
     constructor(numberOfSlices: number, isBad: boolean) {
         super();
@@ -31,9 +31,11 @@ export default class Pizza extends Consumable {
             return super.eat(this);
         }
     }
+
     use() {
         return super.use();
     }
+
     private setConsumed(bool: boolean) {
         return this.consumed = bool;
     }
