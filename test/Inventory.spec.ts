@@ -1,6 +1,6 @@
-import { Inventory } from '../src/Inventory';
-import { Sword } from '../src/Sword';
-import { Bow } from '../src/Bow';
+import Inventory from '../src/Inventory';
+import Sword from '../src/Sword';
+import Bow from '../src/Bow';
 import { ItemWeightComparator } from '../src/ItemWeightComparator';
 
 describe('Inventory', () => {

@@ -1,4 +1,4 @@
-import { Bow } from '../src/Bow';
+import Bow from '../src/Bow';
 
 describe('Bow', () => {
     let sut: Bow;
@@ -11,6 +11,7 @@ describe('Bow', () => {
     describe('polish', () => {
         it('should increase Durability', () => {
             const beforePolishDurability = sut.getDurability();
+            sut.polish();
             sut.polish();
             const afterPolishDurability = sut.getDurability();
             expect(afterPolishDurability).toBeGreaterThan(beforePolishDurability);

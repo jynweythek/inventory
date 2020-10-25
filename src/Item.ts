@@ -24,7 +24,7 @@ export abstract class Item implements Comparable<Item> {
     }
 
     public compareTo(other: Item): number {
-        const diff = +this.value - +other.value;
+        const diff = this.value - other.value;
 
         if (diff > 0) {
             return 1
@@ -37,6 +37,8 @@ export abstract class Item implements Comparable<Item> {
                 'sensitivity': 'base'
             });
         }
+
+        return 0;
     }
 
     public toString(): string {

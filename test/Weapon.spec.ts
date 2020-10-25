@@ -33,7 +33,7 @@ describe('Weapon', () => {
             expect(sut.use()).toBe(expected);
         });
 
-        it('should alert user that weapon is broken', () => {
+        xit('should alert user that weapon is broken', () => {
             const expected = "You can't use the hammer, it is broken.";
             do {
                 sut.use();

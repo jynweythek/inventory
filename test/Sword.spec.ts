@@ -1,4 +1,4 @@
-import { Sword } from '../src/Sword';
+import Sword from '../src/Sword';
 
 describe('Sword', () => {
     let sut: Sword;

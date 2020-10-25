@@ -1,4 +1,4 @@
-import { Consumable } from '../src/Consumable';
+import Consumable from '../src/Consumable';
 
 class TestConsumable extends Consumable {}
 

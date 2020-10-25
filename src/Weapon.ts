@@ -2,19 +2,16 @@ import { Item } from './Item';
 
 export class Weapon extends Item {
     static MODIFIER_CHANGE_RATE: number = .05;
-    public name: string;
-    protected baseDamage: number = 1;
-    private readonly baseDurability: number;
-    protected effectiveDurability: number;
-    protected damageModifier: number;
-    protected durabilityModifier: number;
-    protected damage: number;
-    private usedWeaponDurability: number;
+    protected damage: number = 1;
+    protected durability: number;
+    protected damageModifier: number = Weapon.MODIFIER_CHANGE_RATE;
+    protected durabilityModifier: number = Weapon.MODIFIER_CHANGE_RATE;
+    private usedWeaponDurability: number = this.durability;
 
     constructor(name: string, damage: number, durability: number, value: number, weight: number) {
         super(name, value, weight);
-        this.baseDurability = durability;
-        this.baseDamage = damage;
+        this.durability = durability;
+        this.damage = damage;
     }
 
     compareTo(other: Item): number {
@@ -25,48 +22,57 @@ export class Weapon extends Item {
         return super.toString().concat(`, Damage: ${this.getDamage()}, Durability: ${this.getDurability() * 100}%`);
     }
 
-    setDamageModifier(modifier?: number): number {
-        return this.damageModifier = modifier || .05;
+    setDamageModifier(modifier: number = .05): number {
+        return this.damageModifier = modifier;
     }
 
     getDamage(): number {
-        this.setDamageModifier(this.durabilityModifier);
-        this.damage = this.baseDamage + this.damageModifier;
-        return parseFloat(this.damage.toFixed(2));
+        console.log(Number((this.damage + this.damageModifier).toFixed(2)));
+        return Number((this.damage + this.damageModifier).toFixed(2));
     }
 
-    setDurabilityModifier(modifier?: number): number {
-        return this.durabilityModifier = modifier || .05;
+    setDurabilityModifier(modifier: number = .05): number {
+        return this.durabilityModifier = modifier;
     }
 
-    getDurability(modifier?: number): number {
-        this.setDurabilityModifier(modifier);
-        this.effectiveDurability = (this.baseDurability + this.durabilityModifier);
-        return this.effectiveDurability;
+    getDurability(): number {
+        return this.durability + this.durabilityModifier;
+    }
+
+    calcEffectiveDurability(modifier: number): number {
+        return this.getDurability() + this.setDurabilityModifier(modifier);
+    }
+
+    private getUsedWeaponDurability = () => {
+        return this.usedWeaponDurability
+            || this.calcEffectiveDurability(Weapon.MODIFIER_CHANGE_RATE) - Weapon.MODIFIER_CHANGE_RATE;
+    }
+
+    private durabilityDecrement = function(usedWeaponDurability: number) {
+        return function() {
+            return usedWeaponDurability -= Weapon.MODIFIER_CHANGE_RATE;
+        }
     }
 
     use(): string {
-        const DFLT_MESSAGE: string = `You use the ${this.name}, dealing ${this.getDamage()} points of damage.`;
+        const DFLT_MESSAGE: string = `You use the ${this.name}, dealing ${this.getDamage().toFixed(2)} points of damage.`;
         const BRKS_MESSAGE: string = 'The hammer breaks';
         const BRKN_MESSAGE: string = 'You can\'t use the hammer, it is broken.';
-        let usedWeaponDurability = this.usedWeaponDurability || parseFloat((this.getDurability(.05) - Weapon.MODIFIER_CHANGE_RATE).toFixed(2));
+        let usedWeaponDurability: number = this.getUsedWeaponDurability();
 
         if (usedWeaponDurability <= 0) {
             return BRKN_MESSAGE;
         }
 
-        let durabilityDecrement = function() {
-            return function() {
-                return usedWeaponDurability -= Weapon.MODIFIER_CHANGE_RATE;
-            }
-        }
-        let callDecrement = durabilityDecrement();
-        this.usedWeaponDurability = callDecrement();
+        const callDecrement = this.durabilityDecrement(usedWeaponDurability);
+        this.usedWeaponDurability = this.durability = callDecrement();
 
-        if (usedWeaponDurability >= 0) {
+        if (usedWeaponDurability > 0) {
             return DFLT_MESSAGE;
         } else {
             return `${DFLT_MESSAGE}\n${BRKS_MESSAGE}.`;
         }
     }
+
+    polish (): void {}
 }

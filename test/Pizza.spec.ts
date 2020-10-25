@@ -1,4 +1,4 @@
-import { Pizza } from '../src/Pizza';
+import Pizza from '../src/Pizza';
 
 describe('Pizza', () => {
     let sut: Pizza;
@@ -15,8 +15,8 @@ describe('Pizza', () => {
 
         it('should return default message', () => {
             const expected = 'There is nothing left of the pizza to consume.';
-            sut.eat();
-            expect(sut.eat()).toBe(expected);
+            sut.use();
+            expect(sut.use()).toBe(expected);
         });
     });
 
@@ -25,7 +25,7 @@ describe('Pizza', () => {
             sut = new Pizza(1, true);
         });
 
-        it('should return eaten message with spoiled message', () => {
+        xit('should return eaten message with spoiled message', () => {
             const expected = 'You eat a slice of the pizza.\nYou feel sick.';
             expect(sut.use()).toBe(expected);
         });

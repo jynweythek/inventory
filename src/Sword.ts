@@ -1,39 +1,24 @@
 import { Weapon } from './Weapon';
 
 export default class Sword extends Weapon {
-    public name: string;
-    protected damageModifier: number;
-    public damage: number;
-
     constructor(name: string, damage: number, durability: number, value: number, weight: number) {
         super(name, damage, durability, value, weight);
-        this.name = name;
-        this.baseDamage = damage;
     }
 
-    setDamageModifier(modifier: number): number {
-        return this.damageModifier = modifier;
-    }
-
-    getDamage(): number {
-        this.setDamageModifier(this.damageModifier);
-        this.damage = this.baseDamage + this.damageModifier;
-        return parseFloat(this.damage.toFixed(2));
-    }
+    private damageIncrement = function(polishedDamageModifier: number) {
+        return function() {
+            return polishedDamageModifier += Weapon.MODIFIER_CHANGE_RATE;
+        };
+    };
 
     polish() {
-        let polishedDamageModifier = this.damageModifier || parseFloat((this.getDamage() + Weapon.MODIFIER_CHANGE_RATE).toFixed(2));
+        let polishedDamageModifier = this.damageModifier;
 
-        if (polishedDamageModifier <= this.baseDamage / 4) {
-            let durabilityDecrement = function() {
-                return function() {
-                    return polishedDamageModifier += Weapon.MODIFIER_CHANGE_RATE;
-                };
-            };
-            let callIncrement = durabilityDecrement();
-            this.setDamageModifier(callIncrement());
+        if (polishedDamageModifier + Weapon.MODIFIER_CHANGE_RATE <= this.damage / 4) {
+            let callIncrement = this.damageIncrement(polishedDamageModifier);
+            return this.setDamageModifier(callIncrement());
         } else {
-            return;
+            return false;
         }
     }
 }

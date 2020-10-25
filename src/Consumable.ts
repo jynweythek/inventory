@@ -1,34 +1,42 @@
-export default class Consumable {
-    name: string | undefined;
-    consumed: boolean | undefined;
-    spoiled: boolean | undefined;
-    args: any;
+import { Item } from './Item';
 
-    constructor(name?: string | undefined, consumed?: boolean | undefined, spoiled?: boolean | undefined) {
-        this.name = name;
-        this.consumed = consumed;
+export default class Consumable extends Item {
+    private consumed: boolean = false;
+    protected spoiled: boolean | undefined;
+
+    constructor(name: string, value: number, weight: number, spoiled: boolean | undefined) {
+        super(name, value, weight);
         this.spoiled = spoiled;
     }
 
-    use() {
-        // if (!this.consumed && !this.spoiled) {
-            return this.eat(this.args);
-        // }
+    isConsumed(): boolean {
+        return <boolean>this.consumed;
     }
 
-    eat(args: any) {
+    isSpoiled(): boolean {
+        return <boolean>this.spoiled;
+    }
+
+    setConsumed(consumed: boolean) {
+        this.consumed = consumed;
+    }
+
+    use() {
+        return this.eat();
+    }
+
+    eat(): string {
         const DFLT_MESSAGE: string = `You eat the ${this.name}.`;
         const SICK_MESSAGE: string = 'You feel sick.';
 
-        if (this.consumed) {
-            return `There is nothing left of the ${this ? this.name : args.name} to consume.`;
+        if (this.isConsumed()) {
+            return `There is nothing left of the ${this.name} to consume.`;
+        }
+
+        if (this.isSpoiled()) {
+            return `${DFLT_MESSAGE}\n${SICK_MESSAGE}`;
         } else {
-            if (this.spoiled) {
-                return `${DFLT_MESSAGE}\n${SICK_MESSAGE}`;
-            } else{
-                return `${DFLT_MESSAGE}`;
-            }
+            return `${DFLT_MESSAGE}`;
         }
     }
 }
-
